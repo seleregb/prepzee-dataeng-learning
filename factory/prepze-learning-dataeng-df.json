@@ -1,0 +1,9 @@
+{
+	"name": "prepze-learning-dataeng-df",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "fb8aeef2-6dc9-4a8a-ac6a-6e7d7ee51212",
+		"tenantId": "781485ec-3e4f-4c6d-8415-d707afb25f83"
+	}
+}

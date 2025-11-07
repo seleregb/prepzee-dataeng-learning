@@ -1,0 +1,16 @@
+{
+	"name": "DS_Lahman",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_Lahman",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"table": "test"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

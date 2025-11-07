@@ -1,0 +1,24 @@
+{
+	"name": "LS_Learn_Staging",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"server": "prepzee-learning-dataeng.database.windows.net",
+			"database": "learn",
+			"encrypt": "mandatory",
+			"trustServerCertificate": true,
+			"authenticationType": "SQL",
+			"userName": "dbAdmin",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "prepzee_learning_dataeng_kv",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "dbPassword"
+			}
+		}
+	}
+}

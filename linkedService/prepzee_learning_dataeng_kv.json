@@ -1,0 +1,11 @@
+{
+	"name": "prepzee_learning_dataeng_kv",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://prepzee-dataeng-kv.vault.azure.net/"
+		}
+	}
+}

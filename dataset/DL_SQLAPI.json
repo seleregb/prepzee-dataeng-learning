@@ -1,0 +1,17 @@
+{
+	"name": "DL_SQLAPI",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DS_SQLAPI",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "",
+			"table": "financialsummary"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

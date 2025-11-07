@@ -1,0 +1,75 @@
+{
+	"name": "DS_Learn_Staging",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_Learn_Staging",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "yearID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "round",
+				"type": "varchar"
+			},
+			{
+				"name": "teamIDwinner",
+				"type": "varchar"
+			},
+			{
+				"name": "lgIDwinner",
+				"type": "varchar"
+			},
+			{
+				"name": "teamIDloser",
+				"type": "varchar"
+			},
+			{
+				"name": "lgIDloser",
+				"type": "varchar"
+			},
+			{
+				"name": "wins",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "losses",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ties",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "lastUpdated",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "pId",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "insertedOn",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "SeriesPost_S"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

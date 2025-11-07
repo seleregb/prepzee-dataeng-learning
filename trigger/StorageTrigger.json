@@ -1,0 +1,27 @@
+{
+	"name": "StorageTrigger",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "PL_Trigger",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"FileName": "@triggerBody().FileName"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/datasets/blobs/",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/fc9609a8-33d6-4696-a307-3aa1298eb56b/resourceGroups/prepzee-learning-dataeng/providers/Microsoft.Storage/storageAccounts/prepzeedl",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}
