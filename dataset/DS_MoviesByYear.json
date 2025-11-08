@@ -1,0 +1,19 @@
+{
+	"name": "DS_MoviesByYear",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_Blob2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "data"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
