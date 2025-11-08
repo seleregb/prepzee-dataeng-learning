@@ -53,7 +53,9 @@
 				"     validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('roundRobin', 3)) ~> ExportToBlobStorage"
+				"     partitionBy('hash', 5,",
+				"          movieId",
+				"     )) ~> ExportToBlobStorage"
 			]
 		}
 	}
