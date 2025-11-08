@@ -21,6 +21,28 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/DS_MoviesByYear')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_Blob2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "data"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/PL_BlobToSQL')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -1073,6 +1095,76 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_CleanupMovies')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "DS_Sample",
+								"type": "DatasetReference"
+							},
+							"name": "SelectMoviesBlob"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DS_SampleOutput",
+								"type": "DatasetReference"
+							},
+							"name": "SaveResultsToBlob"
+						},
+						{
+							"dataset": {
+								"referenceName": "DS_MoviesByYear",
+								"type": "DatasetReference"
+							},
+							"name": "SaveParquetResultsToBlob"
+						}
+					],
+					"transformations": [
+						{
+							"name": "GetYearFromMovieTitle"
+						},
+						{
+							"name": "AggregateByYear"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          movieId as string,",
+						"          title as string,",
+						"          genres as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> SelectMoviesBlob",
+						"SelectMoviesBlob derive(Year = toInteger(trim(right(title, 6),'()')),",
+						"          title = trim(left(title, length(title)-7),' ')) ~> GetYearFromMovieTitle",
+						"GetYearFromMovieTitle aggregate(groupBy(Year),",
+						"     CountByYear = count()) ~> AggregateByYear",
+						"GetYearFromMovieTitle sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     partitionBy('roundRobin', 4)) ~> SaveResultsToBlob",
+						"AggregateByYear sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     format: 'parquet',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> SaveParquetResultsToBlob"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_MoviesByYear')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PL_DataFlow')]",
