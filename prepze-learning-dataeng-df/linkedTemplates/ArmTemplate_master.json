@@ -1,0 +1,216 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "prepze-learning-dataeng-df"
+		},
+		"LS_Blob_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'LS_Blob'"
+		},
+		"DS_SQLAPI_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "prepzee-learning-dataeng.database.windows.net"
+		},
+		"DS_SQLAPI_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "prepzee-learning-db"
+		},
+		"DS_SQLAPI_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "dbAdmin"
+		},
+		"LS_Blob_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://prepzeedl.dfs.core.windows.net/"
+		},
+		"LS_Blob2_properties_typeProperties_connectionString_secretName": {
+			"type": "string",
+			"defaultValue": "dlConnectionString"
+		},
+		"LS_HTTP_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://www.stats.govt.nz/assets/"
+		},
+		"LS_Lahman_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "prepzee-learning-dataeng.database.windows.net"
+		},
+		"LS_Lahman_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "Lahman"
+		},
+		"LS_Lahman_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "dbAdmin"
+		},
+		"LS_Learn_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "prepzee-learning-dataeng.database.windows.net"
+		},
+		"LS_Learn_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "learn"
+		},
+		"LS_Learn_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "dbAdmin"
+		},
+		"LS_Learn_Staging_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "prepzee-learning-dataeng.database.windows.net"
+		},
+		"LS_Learn_Staging_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "learn"
+		},
+		"LS_Learn_Staging_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "dbAdmin"
+		},
+		"LS_SQL_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "prepzee-learning-dataeng.database.windows.net"
+		},
+		"LS_SQL_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "prepzee-learning-db"
+		},
+		"LS_SQL_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "dbAdmin"
+		},
+		"prepzee_learning_dataeng_kv_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://prepzee-dataeng-kv.vault.azure.net/"
+		},
+		"StorageTrigger_properties_PL_Trigger_parameters_FileName": {
+			"type": "string",
+			"defaultValue": "@triggerBody().FileName"
+		},
+		"StorageTrigger_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/fc9609a8-33d6-4696-a307-3aa1298eb56b/resourceGroups/prepzee-learning-dataeng/providers/Microsoft.Storage/storageAccounts/prepzeedl"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "prepze-learning-dataeng-df_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"LS_Blob_accountKey": {
+						"value": "[parameters('LS_Blob_accountKey')]"
+					},
+					"LS_Blob_properties_typeProperties_url": {
+						"value": "[parameters('LS_Blob_properties_typeProperties_url')]"
+					},
+					"LS_HTTP_properties_typeProperties_url": {
+						"value": "[parameters('LS_HTTP_properties_typeProperties_url')]"
+					},
+					"prepzee_learning_dataeng_kv_properties_typeProperties_baseUrl": {
+						"value": "[parameters('prepzee_learning_dataeng_kv_properties_typeProperties_baseUrl')]"
+					},
+					"DS_SQLAPI_properties_typeProperties_server": {
+						"value": "[parameters('DS_SQLAPI_properties_typeProperties_server')]"
+					},
+					"DS_SQLAPI_properties_typeProperties_database": {
+						"value": "[parameters('DS_SQLAPI_properties_typeProperties_database')]"
+					},
+					"DS_SQLAPI_properties_typeProperties_userName": {
+						"value": "[parameters('DS_SQLAPI_properties_typeProperties_userName')]"
+					},
+					"LS_Blob2_properties_typeProperties_connectionString_secretName": {
+						"value": "[parameters('LS_Blob2_properties_typeProperties_connectionString_secretName')]"
+					},
+					"LS_Lahman_properties_typeProperties_server": {
+						"value": "[parameters('LS_Lahman_properties_typeProperties_server')]"
+					},
+					"LS_Lahman_properties_typeProperties_database": {
+						"value": "[parameters('LS_Lahman_properties_typeProperties_database')]"
+					},
+					"LS_Lahman_properties_typeProperties_userName": {
+						"value": "[parameters('LS_Lahman_properties_typeProperties_userName')]"
+					},
+					"LS_Learn_properties_typeProperties_server": {
+						"value": "[parameters('LS_Learn_properties_typeProperties_server')]"
+					},
+					"LS_Learn_properties_typeProperties_database": {
+						"value": "[parameters('LS_Learn_properties_typeProperties_database')]"
+					},
+					"LS_Learn_properties_typeProperties_userName": {
+						"value": "[parameters('LS_Learn_properties_typeProperties_userName')]"
+					},
+					"LS_Learn_Staging_properties_typeProperties_server": {
+						"value": "[parameters('LS_Learn_Staging_properties_typeProperties_server')]"
+					},
+					"LS_Learn_Staging_properties_typeProperties_database": {
+						"value": "[parameters('LS_Learn_Staging_properties_typeProperties_database')]"
+					},
+					"LS_Learn_Staging_properties_typeProperties_userName": {
+						"value": "[parameters('LS_Learn_Staging_properties_typeProperties_userName')]"
+					},
+					"LS_SQL_properties_typeProperties_server": {
+						"value": "[parameters('LS_SQL_properties_typeProperties_server')]"
+					},
+					"LS_SQL_properties_typeProperties_database": {
+						"value": "[parameters('LS_SQL_properties_typeProperties_database')]"
+					},
+					"LS_SQL_properties_typeProperties_userName": {
+						"value": "[parameters('LS_SQL_properties_typeProperties_userName')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "prepze-learning-dataeng-df_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"StorageTrigger_properties_PL_Trigger_parameters_FileName": {
+						"value": "[parameters('StorageTrigger_properties_PL_Trigger_parameters_FileName')]"
+					},
+					"StorageTrigger_properties_typeProperties_scope": {
+						"value": "[parameters('StorageTrigger_properties_typeProperties_scope')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'prepze-learning-dataeng-df_ArmTemplate_0')]"
+			]
+		}
+	]
+}

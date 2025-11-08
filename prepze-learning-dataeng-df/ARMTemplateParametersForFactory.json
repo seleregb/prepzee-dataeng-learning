@@ -1,0 +1,75 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "prepze-learning-dataeng-df"
+		},
+		"LS_Blob_accountKey": {
+			"value": ""
+		},
+		"DS_SQLAPI_properties_typeProperties_server": {
+			"value": "prepzee-learning-dataeng.database.windows.net"
+		},
+		"DS_SQLAPI_properties_typeProperties_database": {
+			"value": "prepzee-learning-db"
+		},
+		"DS_SQLAPI_properties_typeProperties_userName": {
+			"value": "dbAdmin"
+		},
+		"LS_Blob_properties_typeProperties_url": {
+			"value": "https://prepzeedl.dfs.core.windows.net/"
+		},
+		"LS_Blob2_properties_typeProperties_connectionString_secretName": {
+			"value": "dlConnectionString"
+		},
+		"LS_HTTP_properties_typeProperties_url": {
+			"value": "https://www.stats.govt.nz/assets/"
+		},
+		"LS_Lahman_properties_typeProperties_server": {
+			"value": "prepzee-learning-dataeng.database.windows.net"
+		},
+		"LS_Lahman_properties_typeProperties_database": {
+			"value": "Lahman"
+		},
+		"LS_Lahman_properties_typeProperties_userName": {
+			"value": "dbAdmin"
+		},
+		"LS_Learn_properties_typeProperties_server": {
+			"value": "prepzee-learning-dataeng.database.windows.net"
+		},
+		"LS_Learn_properties_typeProperties_database": {
+			"value": "learn"
+		},
+		"LS_Learn_properties_typeProperties_userName": {
+			"value": "dbAdmin"
+		},
+		"LS_Learn_Staging_properties_typeProperties_server": {
+			"value": "prepzee-learning-dataeng.database.windows.net"
+		},
+		"LS_Learn_Staging_properties_typeProperties_database": {
+			"value": "learn"
+		},
+		"LS_Learn_Staging_properties_typeProperties_userName": {
+			"value": "dbAdmin"
+		},
+		"LS_SQL_properties_typeProperties_server": {
+			"value": "prepzee-learning-dataeng.database.windows.net"
+		},
+		"LS_SQL_properties_typeProperties_database": {
+			"value": "prepzee-learning-db"
+		},
+		"LS_SQL_properties_typeProperties_userName": {
+			"value": "dbAdmin"
+		},
+		"prepzee_learning_dataeng_kv_properties_typeProperties_baseUrl": {
+			"value": "https://prepzee-dataeng-kv.vault.azure.net/"
+		},
+		"StorageTrigger_properties_PL_Trigger_parameters_FileName": {
+			"value": "@triggerBody().FileName"
+		},
+		"StorageTrigger_properties_typeProperties_scope": {
+			"value": "/subscriptions/fc9609a8-33d6-4696-a307-3aa1298eb56b/resourceGroups/prepzee-learning-dataeng/providers/Microsoft.Storage/storageAccounts/prepzeedl"
+		}
+	}
+}
