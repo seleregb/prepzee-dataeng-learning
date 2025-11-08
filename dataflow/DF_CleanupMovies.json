@@ -58,7 +58,11 @@
 				"     validateSchema: false,",
 				"     format: 'parquet',",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> SaveParquetResultsToBlob"
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('key',",
+				"          0,",
+				"          Year",
+				"     )) ~> SaveParquetResultsToBlob"
 			]
 		}
 	}
