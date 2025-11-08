@@ -1,0 +1,60 @@
+{
+	"name": "DF_Sample",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_Sample",
+						"type": "DatasetReference"
+					},
+					"name": "DSSampleSource"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_SampleOutput",
+						"type": "DatasetReference"
+					},
+					"name": "ExportToBlobStorage"
+				}
+			],
+			"transformations": [
+				{
+					"name": "SelectMovieAndTitle"
+				},
+				{
+					"name": "FilterByTitle"
+				},
+				{
+					"name": "ModifyTitle"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          movieId as short,",
+				"          title as string,",
+				"          genres as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> DSSampleSource",
+				"DSSampleSource select(mapColumn(",
+				"          movieId,",
+				"          title",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectMovieAndTitle",
+				"SelectMovieAndTitle filter(length(title) > 20) ~> FilterByTitle",
+				"FilterByTitle derive(title = upper(title)) ~> ModifyTitle",
+				"ModifyTitle sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('roundRobin', 3)) ~> ExportToBlobStorage"
+			]
+		}
+	}
+}
