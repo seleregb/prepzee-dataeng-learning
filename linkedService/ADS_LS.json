@@ -1,0 +1,19 @@
+{
+	"name": "ADS_LS",
+	"properties": {
+		"annotations": [],
+		"type": "AzureDatabricks",
+		"typeProperties": {
+			"domain": "https://adb-1849471458113395.15.azuredatabricks.net",
+			"accessToken": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "prepzee_learning_dataeng_kv",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "ADFKey"
+			},
+			"existingClusterId": "1115-151310-wiy8bziy"
+		}
+	}
+}
