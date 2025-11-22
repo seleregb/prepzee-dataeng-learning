@@ -70,6 +70,12 @@
 		},
 		"StorageTrigger_properties_typeProperties_scope": {
 			"value": "/subscriptions/fc9609a8-33d6-4696-a307-3aa1298eb56b/resourceGroups/prepzee-learning-dataeng/providers/Microsoft.Storage/storageAccounts/prepzeedl"
+		},
+		"prepzee_learning_kv_LS_properties_typeProperties_baseUrl": {
+			"value": "https://prepzee-dataeng-kv.vault.azure.net/"
+		},
+		"ADS_LS_properties_typeProperties_existingClusterId": {
+			"value": "1115-151310-wiy8bziy"
 		}
 	}
 }

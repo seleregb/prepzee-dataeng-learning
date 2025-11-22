@@ -23,6 +23,10 @@
 			"type": "string",
 			"defaultValue": "https://prepzee-dataeng-kv.vault.azure.net/"
 		},
+		"prepzee_learning_kv_LS_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://prepzee-dataeng-kv.vault.azure.net/"
+		},
 		"DS_SQLAPI_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "prepzee-learning-dataeng.database.windows.net"
@@ -86,6 +90,10 @@
 		"LS_SQL_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "dbAdmin"
+		},
+		"ADS_LS_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "1115-151310-wiy8bziy"
 		}
 	},
 	"variables": {
@@ -133,6 +141,19 @@
 				"type": "AzureKeyVault",
 				"typeProperties": {
 					"baseUrl": "[parameters('prepzee_learning_dataeng_kv_properties_typeProperties_baseUrl')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/prepzee_learning_kv_LS')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('prepzee_learning_kv_LS_properties_typeProperties_baseUrl')]"
 				}
 			},
 			"dependsOn": []
@@ -320,6 +341,30 @@
 						},
 						"secretName": "dbPassword"
 					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/prepzee_learning_dataeng_kv')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ADS_LS')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-1849471458113395.15.azuredatabricks.net",
+					"accessToken": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "prepzee_learning_dataeng_kv",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "ADFKey"
+					},
+					"existingClusterId": "[parameters('ADS_LS_properties_typeProperties_existingClusterId')]"
 				}
 			},
 			"dependsOn": [
@@ -682,65 +727,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/LS_SQL')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_SQL_Query')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_SQL",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_SQL')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_Sample')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_Blob2",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "movies.csv",
-						"container": "datasets"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "movieId",
-						"type": "String"
-					},
-					{
-						"name": "title",
-						"type": "String"
-					},
-					{
-						"name": "genres",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_Blob2')]"
 			]
 		}
 	]

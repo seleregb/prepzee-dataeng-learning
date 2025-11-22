@@ -94,6 +94,14 @@
 		"StorageTrigger_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/fc9609a8-33d6-4696-a307-3aa1298eb56b/resourceGroups/prepzee-learning-dataeng/providers/Microsoft.Storage/storageAccounts/prepzeedl"
+		},
+		"prepzee_learning_kv_LS_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://prepzee-dataeng-kv.vault.azure.net/"
+		},
+		"ADS_LS_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "1115-151310-wiy8bziy"
 		}
 	},
 	"variables": {
@@ -2062,6 +2070,82 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/DS_Sample')]",
 				"[concat(variables('factoryId'), '/datasets/DS_SampleOutput')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PL_Databricks')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ADB_Notebook",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Shared/Nov2025/Widgets",
+							"baseParameters": {
+								"input": "cars.csv"
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "ADS_LS",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ADS_LS')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/prepzee_learning_kv_LS')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('prepzee_learning_kv_LS_properties_typeProperties_baseUrl')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ADS_LS')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-1849471458113395.15.azuredatabricks.net",
+					"accessToken": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "prepzee_learning_dataeng_kv",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "ADFKey"
+					},
+					"existingClusterId": "[parameters('ADS_LS_properties_typeProperties_existingClusterId')]"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/prepzee_learning_dataeng_kv')]"
 			]
 		}
 	]
